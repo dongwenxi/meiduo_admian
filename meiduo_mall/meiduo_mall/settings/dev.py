@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     'carts.apps.CartsConfig',
     'orders.apps.OrdersConfig',
     'payments.apps.PaymentsConfig',
+    'meiduo_admin.apps.MeiduoAdminConfig'
 
     # 'haystack',
     'django_crontab',  # 定时任务
@@ -318,3 +319,7 @@ CRONJOBS = [
      '>> ' + os.path.join(os.path.dirname(BASE_DIR), 'logs/crontab.log'))
 ]
 CRONTAB_COMMAND_PREFIX = 'LANG_ALL=zh_cn.UTF-8'  # 支持中文
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'meiduo_mall.utils.exceptions.exception_handler'
+}
