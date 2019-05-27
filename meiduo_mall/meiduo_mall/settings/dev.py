@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'corsheaders',
 
     # 完整导包路径
     # 'meiduo_mall.apps.users.apps.UsersConfig',
@@ -70,6 +71,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    # 注意：此中间件添加到中间件的第一个
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -335,3 +338,10 @@ JWT_AUTH = {
     # 设置生成jwt token的有效时间
     'JWT_EXPIRATION_DELTA': datetime.timedelta(days=1),
 }
+
+# CORS跨域请求设置
+CORS_ORIGIN_WHITELIST = (
+    # 备注：允许源地址`127.0.0.1:8080`向当前API服务器发起跨域请求
+    '127.0.0.1:8080',
+)
+CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
