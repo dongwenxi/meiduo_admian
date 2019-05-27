@@ -8,7 +8,7 @@ from meiduo_admin.serializers.users import AdminAuthSerializer
 # POST /meiduo_admin/authrizations/
 class AdminAuthView(APIView):
 
-    def post(self, request, pk):
+    def post(self, request):
         """
         管理员登录：
         1. 获取参数并进行校验(参数完整性，用户名和密码正确)
