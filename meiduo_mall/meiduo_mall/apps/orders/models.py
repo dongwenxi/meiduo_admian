@@ -4,6 +4,8 @@ from users.models import User, Address
 from goods.models import SKU
 
 
+# user = User.objects.get(id=2)
+# user.orders
 class OrderInfo(BaseModel):
     """订单信息"""
     order_id = models.CharField(max_length=64, primary_key=True, verbose_name="订单号")

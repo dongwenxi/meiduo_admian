@@ -77,3 +77,27 @@ class UserDayActiveView(APIView):
         }
 
         return Response(response_data)
+
+
+# GET /meiduo_admin/statistical/day_orders/
+class UserDayOrderView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        """
+        获取日下单用户数量:
+        1. 统计网站日下单用户数量
+        2. 返回响应
+        """
+        # 1. 统计网站日下单用户数量
+        now_date = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        count = User.objects.filter(orders__create_time__gte=now_date).count()
+
+        # 2. 返回响应
+        response_data = {
+            # 年-月-日
+            'date': now_date.date(),
+            'count': count
+        }
+
+        return Response(response_data)
