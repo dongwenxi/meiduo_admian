@@ -53,3 +53,27 @@ class UserDayIncrementView(APIView):
         }
 
         return Response(response_data)
+
+
+# GET /meiduo_admin/statistical/day_active/
+class UserDayActiveView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        """
+        获取日活跃用户数量:
+        1. 统计网站当日活跃用户数量
+        2. 返回响应
+        """
+        # 1. 统计网站当日活跃用户数量
+        now_date = timezone.now().replace(hour=0, minute=0, second=0, microsecond=0)
+        count = User.objects.filter(last_login__gte=now_date).count()
+
+        # 2. 返回响应
+        response_data = {
+            # 年-月-日
+            'date': now_date.date(),
+            'count': count
+        }
+
+        return Response(response_data)
