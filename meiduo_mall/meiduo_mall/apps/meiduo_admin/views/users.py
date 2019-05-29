@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView, ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
@@ -38,7 +38,9 @@ class AdminAuthView(CreateAPIView):
 
 # GET /meiduo_admin/users/?keyword=<关键字>
 # class UserInfoView(ListModelMixin, GenericAPIView):
-class UserInfoView(ListAPIView):
+# class UserInfoView(ListModelMixin, CreateModelMixin, GenericAPIView):
+# class UserInfoView(CreateModelMixin, ListAPIView):
+class UserInfoView(ListCreateAPIView):
     # 指定视图所使用的序列化器类
     serializer_class = UserSerializer
 
@@ -55,6 +57,26 @@ class UserInfoView(ListAPIView):
             users = User.objects.filter(is_staff=False)
 
         return users
+
+    # def post(self, request):
+    #     return self.create(request)
+
+    # def post(self, request):
+    #     """
+    #     网站用户数据的新增:
+    #     1. 获取参数并进行校验(参数完整性，手机号格式，手机号是否注册，邮箱格式)
+    #     2. 创建并保存新用户的数据
+    #     3. 将新用户数据序列化并返回
+    #     """
+    #     # 1. 获取参数并进行校验(参数完整性，手机号格式，手机号是否注册，邮箱格式)
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #
+    #     # 2. 创建并保存新用户的数据(调用create)
+    #     serializer.save()
+    #
+    #     # 3. 将新用户数据序列化并返回
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     # def get(self, request):
     #     """
