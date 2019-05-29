@@ -1,16 +1,16 @@
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView, ListCreateAPIView
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.mixins import CreateModelMixin, ListModelMixin
 
 from meiduo_admin.serializers.users import AdminAuthSerializer, UserSerializer
-
-# POST /meiduo_admin/authrizations/
-# class AdminAuthView(CreateModelMixin, GenericAPIView):
 from users.models import User
 
 
+# POST /meiduo_admin/authrizations/
+# class AdminAuthView(CreateModelMixin, GenericAPIView):
 class AdminAuthView(CreateAPIView):
     # 指定视图所使用的序列化器类
     serializer_class = AdminAuthSerializer
@@ -41,6 +41,7 @@ class AdminAuthView(CreateAPIView):
 # class UserInfoView(ListModelMixin, CreateModelMixin, GenericAPIView):
 # class UserInfoView(CreateModelMixin, ListAPIView):
 class UserInfoView(ListCreateAPIView):
+    permission_classes = [IsAdminUser]
     # 指定视图所使用的序列化器类
     serializer_class = UserSerializer
 

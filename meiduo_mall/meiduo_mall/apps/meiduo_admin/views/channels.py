@@ -1,6 +1,7 @@
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.mixins import ListModelMixin
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -11,6 +12,7 @@ from meiduo_admin.serializers.channels import ChannelSerializer, ChannelTypeSeri
 
 
 class ChannelViewSet(ModelViewSet):
+    permission_classes = [IsAdminUser]
     # 指定视图所使用的序列化器
     serializer_class = ChannelSerializer
     # 指定视图所使用的查询集
@@ -35,6 +37,7 @@ class ChannelViewSet(ModelViewSet):
 # GET /meiduo_admin/goods/channel_types/
 # class ChannelTypesView(ListModelMixin, GenericAPIView):
 class ChannelTypesView(ListAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = ChannelTypeSerializer
     queryset = GoodsChannelGroup.objects.all()
 
@@ -61,6 +64,7 @@ class ChannelTypesView(ListAPIView):
 # GET /meiduo_admin/goods/categories/
 # class ChannelCategoryView(ListModelMixin, GenericAPIView):
 class ChannelCategoryView(ListAPIView):
+    permission_classes = [IsAdminUser]
     serializer_class = ChannelCategorySerializer
     queryset = GoodsCategory.objects.filter(parent=None)
 
