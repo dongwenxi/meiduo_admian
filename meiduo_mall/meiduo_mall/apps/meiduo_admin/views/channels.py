@@ -1,10 +1,12 @@
+from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListAPIView
 from rest_framework.mixins import ListModelMixin
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
-from goods.models import GoodsChannel, GoodsChannelGroup
+from goods.models import GoodsChannel, GoodsChannelGroup, GoodsCategory
+from meiduo_admin.serializers.categories import ChannelCategorySerializer
 from meiduo_admin.serializers.channels import ChannelSerializer, ChannelTypeSerializer
 
 
@@ -46,3 +48,30 @@ class ChannelTypesView(ListAPIView):
 
     # def get(self, request):
     #     return self.list(request)
+
+
+# GET /meiduo_admin/goods/categories/
+# class ChannelCategoryView(ListModelMixin, GenericAPIView):
+class ChannelCategoryView(ListAPIView):
+    serializer_class = ChannelCategorySerializer
+    queryset = GoodsCategory.objects.filter(parent=None)
+
+    # 注：关闭分页
+    pagination_class = None
+
+    # def get(self, request):
+    #     return self.list(request)
+
+    # def get(self, request):
+    #     """
+    #     获取一级分类的数据:
+    #     1. 查询获取一级分类的数据
+    #     2. 将一级分类数据序列化并返回
+    #     """
+    #     # 1. 查询获取一级分类的数据
+    #     categories = self.get_queryset()
+    #
+    #     # 2. 将一级分类数据序列化并返回
+    #     serializer = self.get_serializer(categories, many=True)
+    #
+    #     return Response(serializer.data)
