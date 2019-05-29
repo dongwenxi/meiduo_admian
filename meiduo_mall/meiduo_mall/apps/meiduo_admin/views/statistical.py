@@ -2,6 +2,9 @@ from django.utils import timezone
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAdminUser
+
+from goods.models import GoodsVisitCount
+from meiduo_admin.serializers.statistical import GoodsVisitCountSerializer
 from users.models import User
 
 
@@ -138,3 +141,34 @@ class UserMonthIncrementView(APIView):
 
         # 2. 返回响应
         return Response(count_list)
+
+
+# GET /meiduo_admin/statistical/goods_day_views/
+class GoodsDayViewsView(APIView):
+    permission_classes = [IsAdminUser]
+
+    def get(self, request):
+        """
+        获取日分类商品访问量数据:
+        1. 获取当天日分类商品访问量数据
+        2. 将数据序列化并返回
+        """
+        # 1. 获取当天日分类商品访问量数据
+        now_date = timezone.now().date() # '年-月-日'
+        goods_visits = GoodsVisitCount.objects.filter(date=now_date)
+
+        # 2. 将数据序列化并返回
+        serializer = GoodsVisitCountSerializer(goods_visits, many=True)
+        return Response(serializer.data)
+
+
+
+
+
+
+
+
+
+
+
+
