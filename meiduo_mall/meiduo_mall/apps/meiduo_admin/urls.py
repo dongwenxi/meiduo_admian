@@ -17,6 +17,7 @@ urlpatterns = [
 
     # 频道管理
     url(r'^goods/channel_types/$', channels.ChannelTypesView.as_view()),
+    url(r'^goods/categories/$', channels.ChannelCategoryView.as_view()),
 ]
 
 # 频道管理

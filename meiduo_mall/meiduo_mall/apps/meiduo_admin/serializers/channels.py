@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from goods.models import GoodsChannel, GoodsChannelGroup
+from goods.models import GoodsChannel, GoodsChannelGroup, GoodsCategory
 
 
 # channel = GoodsChannel.objects.get(id=1)
@@ -14,9 +14,30 @@ class ChannelSerializer(serializers.ModelSerializer):
     category = serializers.StringRelatedField(label='一级分类名称')
     group = serializers.StringRelatedField(label='频道组的名称')
 
+    category_id = serializers.IntegerField(label='一级分类id')
+    group_id = serializers.IntegerField(label='频道组id')
+
     class Meta:
         model = GoodsChannel
         fields = ('id', 'category', 'category_id', 'group', 'group_id', 'sequence', 'url')
+
+    def validate_category_id(self, value):
+        """一级分类是否存在"""
+        try:
+            category = GoodsCategory.objects.get(id=value, parent=None)
+        except GoodsCategory.DoesNotExist:
+            raise serializers.ValidationError('一级分类不存在')
+
+        return value
+
+    def validate_group_id(self, value):
+        """频道组是否存在"""
+        try:
+            group = GoodsChannelGroup.objects.get(id=value)
+        except GoodsChannelGroup.DoesNotExist:
+            raise serializers.ValidationError('频道组不存在')
+
+        return value
 
 
 class ChannelTypeSerializer(serializers.ModelSerializer):
