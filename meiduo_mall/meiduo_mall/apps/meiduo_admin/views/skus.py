@@ -17,6 +17,7 @@ class SKUImageViewSet(ModelViewSet):
 
     # GET /meiduo_admin/skus/images/ -> list
     # POST /meiduo_admin/skus/images/ -> create
+    # GET /meiduo_admin/skus/images/(?P<pk>\d+)/ -> retrieve
 
     # def list(self, request):
     #     qs = self.get_queryset()
@@ -29,6 +30,11 @@ class SKUImageViewSet(ModelViewSet):
     #
     #     serializer.save() # -> create
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
 
 
 # GET /meiduo_admin/skus/simple/
