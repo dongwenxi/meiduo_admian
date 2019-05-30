@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from goods.models import SKUImage
+from goods.models import SKUImage, SKU
 
 
 # sku_image = SKUImage.objects.get(id=1)
@@ -15,3 +15,10 @@ class SKUImageSerializer(serializers.ModelSerializer):
     class Meta:
         model = SKUImage
         exclude = ('create_time', 'update_time')
+
+
+class SKUSimpleSerializer(serializers.ModelSerializer):
+    """SKU商品序列化器类"""
+    class Meta:
+        model = SKU
+        fields = ('id', 'name')

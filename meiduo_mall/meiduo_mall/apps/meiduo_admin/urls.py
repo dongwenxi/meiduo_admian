@@ -18,6 +18,9 @@ urlpatterns = [
     # 频道管理
     url(r'^goods/channel_types/$', channels.ChannelTypesView.as_view()),
     url(r'^goods/categories/$', channels.ChannelCategoryView.as_view()),
+
+    # SKU图片管理
+    url(r'^skus/simple/$', skus.SKUSimpleView.as_view()),
 ]
 
 # 频道管理
