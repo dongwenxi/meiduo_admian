@@ -18,6 +18,8 @@ class SKUImageViewSet(ModelViewSet):
     # GET /meiduo_admin/skus/images/ -> list
     # POST /meiduo_admin/skus/images/ -> create
     # GET /meiduo_admin/skus/images/(?P<pk>\d+)/ -> retrieve
+    # PUT /meiduo_admin/skus/images/(?P<pk>\d+)/ -> update
+    # DELETE /meiduo_admin/skus/images/(?P<pk>\d+)/ -> destroy
 
     # def list(self, request):
     #     qs = self.get_queryset()
@@ -35,6 +37,18 @@ class SKUImageViewSet(ModelViewSet):
     #     instance = self.get_object()
     #     serializer = self.get_serializer(instance)
     #     return Response(serializer.data)
+
+    # def update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance, data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save() # update
+    #     return Response(serializer.data)
+
+    # def destroy(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # GET /meiduo_admin/skus/simple/

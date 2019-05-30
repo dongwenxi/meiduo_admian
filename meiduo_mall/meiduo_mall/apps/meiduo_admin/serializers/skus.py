@@ -32,6 +32,29 @@ class SKUImageSerializer(serializers.ModelSerializer):
         # 获取的sku_id就是这里返回sku对象
         return sku
 
+    # ModelSerializer->update
+    def update(self, instance, validated_data):
+        # 获取上传文件对象
+        file = validated_data['image']
+
+        # 获取sku对象
+        sku = validated_data['sku_id']
+
+        # 上传图片到fdfs系统
+        fdfs = FDFSStorage()
+        try:
+            file_id = fdfs.save(file.name, file)
+        except Exception:
+            # 上传文件失败
+            raise APIException('上传文件失败')
+
+        # 修改SKU图片数据
+        instance.sku = sku
+        instance.image = file_id
+        instance.save()
+
+        return instance
+
     # ModelSerializer->create->SKUImage.objects.create()
     def create(self, validated_data):
         # 获取上传文件对象
