@@ -1,10 +1,11 @@
+from django.db.models import Q
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from goods.models import SKUImage, SKU
-from meiduo_admin.serializers.skus import SKUImageSerializer, SKUSimpleSerializer
+from meiduo_admin.serializers.skus import SKUImageSerializer, SKUSimpleSerializer, SKUSerializer
 
 
 class SKUImageViewSet(ModelViewSet):
@@ -62,6 +63,34 @@ class SKUSimpleView(ListAPIView):
 
     # def get(self, request):
     #     # return self.list(request)
+    #     qs = self.get_queryset()
+    #     serializer = self.get_serializer(qs, many=True)
+    #     return Response(serializer.data)
+
+
+class SKUViewSet(ModelViewSet):
+    """SKU视图集"""
+    permission_classes = [IsAdminUser]
+    # 指定视图所使用的序列化器类
+    serializer_class = SKUSerializer
+
+    # 重写GenericAPIView中get_queryset
+    def get_queryset(self):
+        # 获取keyword
+        keyword = self.request.query_params.get('keyword')
+
+        if keyword:
+            # |
+            skus = SKU.objects.filter(Q(name__contains=keyword) |
+                                      Q(caption__contains=keyword))
+        else:
+            skus = SKU.objects.all()
+
+        return skus
+
+    # GET /meiduo_admin/skus/ -> list
+
+    # def list(self, request):
     #     qs = self.get_queryset()
     #     serializer = self.get_serializer(qs, many=True)
     #     return Response(serializer.data)

@@ -1,14 +1,12 @@
 from rest_framework import serializers
 from rest_framework.exceptions import APIException
 
-from goods.models import SKUImage, SKU
+from goods.models import SKUImage, SKU, SKUSpecification
+from meiduo_mall.utils.fdfs.storage import FDFSStorage
 
 
 # sku_image = SKUImage.objects.get(id=1)
 # sku_image.sku
-from meiduo_mall.utils.fdfs.storage import FDFSStorage
-
-
 class SKUImageSerializer(serializers.ModelSerializer):
     """SKU图片序列化器类"""
     sku_id = serializers.IntegerField(label='SKU商品id')
@@ -86,10 +84,36 @@ class SKUImageSerializer(serializers.ModelSerializer):
         return sku_image
 
 
-
-
 class SKUSimpleSerializer(serializers.ModelSerializer):
     """SKU商品序列化器类"""
     class Meta:
         model = SKU
         fields = ('id', 'name')
+
+
+class SKUSpecSerializer(serializers.ModelSerializer):
+    """SKU规格选项序列化器类"""
+    class Meta:
+        model = SKUSpecification
+        fields = ('spec_id', 'option_id')
+
+
+# sku = SKU.objects.get(id=1)
+# sku.spu -> 获取和sku关联的spu数据
+# sku.category -> 获取和sku关联的第三级分类数据
+# sku.specs -> 获取和sku关联的规格选项数据
+class SKUSerializer(serializers.ModelSerializer):
+    """SKU商品序列化器类"""
+    # 关联对象嵌套序列化
+    spu = serializers.StringRelatedField(label='SPU名称')
+    category = serializers.StringRelatedField(label='第三级分类')
+
+    spu_id = serializers.IntegerField(label='SPU ID')
+    category_id = serializers.IntegerField(label='第三级分类id')
+
+    # 关联对象嵌套序列化：使用指定的序列化器将关联对象进行序列化
+    specs = SKUSpecSerializer(label='SKU规格选项数据', many=True)
+
+    class Meta:
+        model = SKU
+        exclude = ('default_image', 'create_time', 'update_time')

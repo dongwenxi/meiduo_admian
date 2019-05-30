@@ -155,6 +155,8 @@ class SpecificationOption(BaseModel):
         return '%s - %s' % (self.spec, self.value)
 
 
+# sku = SKU.objects.get(id=1)
+# sku.specs
 class SKUSpecification(BaseModel):
     """SKU具体规格"""
     sku = models.ForeignKey(SKU, related_name='specs', on_delete=models.CASCADE, verbose_name='sku')
