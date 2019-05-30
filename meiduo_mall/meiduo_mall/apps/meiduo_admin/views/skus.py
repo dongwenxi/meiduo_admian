@@ -16,11 +16,19 @@ class SKUImageViewSet(ModelViewSet):
     serializer_class = SKUImageSerializer
 
     # GET /meiduo_admin/skus/images/ -> list
+    # POST /meiduo_admin/skus/images/ -> create
 
     # def list(self, request):
     #     qs = self.get_queryset()
     #     serializer = self.get_serializer(qs, many=True)
     #     return Response(serializer.data)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #
+    #     serializer.save() # -> create
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 # GET /meiduo_admin/skus/simple/
