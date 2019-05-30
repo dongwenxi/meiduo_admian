@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from meiduo_admin.views import users, statistical, channels
+from meiduo_admin.views import users, statistical, channels, skus
 
 urlpatterns = [
     url(r'^authorizations/$', users.AdminAuthView.as_view()),
@@ -27,4 +27,9 @@ router = DefaultRouter()
 # 2. 注册视图集
 router.register('goods/channels', channels.ChannelViewSet, base_name='channels')
 # 3. 将生成url配置项列表添加到urlpatterns中
+urlpatterns += router.urls
+
+# SKU图片管理
+router = DefaultRouter()
+router.register('skus/images', skus.SKUImageViewSet, base_name='images')
 urlpatterns += router.urls
