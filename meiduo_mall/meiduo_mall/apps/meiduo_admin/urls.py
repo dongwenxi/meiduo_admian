@@ -25,6 +25,7 @@ urlpatterns = [
     # SKU商品管理
     url(r'^goods/simple/$', spus.SPUSimpleView.as_view()),
     url(r'^skus/categories/$', skus.SKUCategoriesView.as_view()),
+    url(r'^goods/(?P<pk>\d+)/specs/$', spus.SPUSpecView.as_view()),
 ]
 
 # 频道管理
