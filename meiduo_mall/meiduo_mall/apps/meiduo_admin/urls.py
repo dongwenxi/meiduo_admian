@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from meiduo_admin.views import users, statistical, channels, skus, spus
+from meiduo_admin.views import users, statistical, channels, skus, spus, orders
 
 urlpatterns = [
     url(r'^authorizations/$', users.AdminAuthView.as_view()),
@@ -45,4 +45,9 @@ urlpatterns += router.urls
 # SKU商品管理
 router = DefaultRouter()
 router.register('skus', skus.SKUViewSet, base_name='skus')
+urlpatterns += router.urls
+
+# 订单管理
+router = DefaultRouter()
+router.register('orders', orders.OrdersViewSet, base_name='orders')
 urlpatterns += router.urls
