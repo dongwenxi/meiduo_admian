@@ -93,6 +93,7 @@ class SKUViewSet(ModelViewSet):
     # POST /meiduo_admin/skus/ -> create
     # GET /meiduo_admin/skus/(?P<pk>\d+)/ -> retrieve
     # PUT /meiduo_admin/skus/(?P<pk>\d+)/ -> update
+    # DELETE /meiduo_admin/skus/(?P<pk>\d+)/ -> destroy
 
     # def list(self, request):
     #     qs = self.get_queryset()
@@ -117,6 +118,11 @@ class SKUViewSet(ModelViewSet):
     #     serializer.is_valid(raise_exception=True)
     #     serializer.save() # update
     #     return Response(serializer.data)
+
+    # def destroy(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 # GET /meiduo_admin/skus/categories/
