@@ -198,6 +198,47 @@ class SKUSerializer(serializers.ModelSerializer):
 
         return sku
 
+    def update(self, instance, validated_data):
+        """
+        instance: sku商品对象
+        """
+        specs = validated_data.pop('specs')
+
+        with transaction.atomic():
+            # 更新sku商品的数据
+            super().update(instance, validated_data)
+
+            # 更新sku商品的规格选项数据
+            sku_specs = instance.specs.all()
+
+            sku_specs_li = [{
+                                'spec_id': spec.spec_id,
+                                'option_id': spec.option_id
+                            }
+                            for spec in sku_specs]
+
+            if specs != sku_specs_li:
+                # 删除sku原有的规格选项数据
+                sku_specs.delete()
+
+                # 添加sku商品规格选项数据
+                for spec in specs:
+                    # 获取spec_id和option_id
+                    spec_id = spec.get('spec_id')
+                    option_id = spec.get('option_id')
+
+                    SKUSpecification.objects.create(
+                        sku=instance,
+                        spec_id=spec_id,
+                        option_id=option_id
+                    )
+
+        return instance
+
+
+
+
+
 
 
 
