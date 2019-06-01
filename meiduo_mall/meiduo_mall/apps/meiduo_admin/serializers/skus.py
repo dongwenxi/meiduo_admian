@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.exceptions import APIException
 
-from goods.models import SKUImage, SKU, SKUSpecification
+from goods.models import SKUImage, SKU, SKUSpecification, GoodsCategory
 from meiduo_mall.utils.fdfs.storage import FDFSStorage
 
 
@@ -117,3 +117,11 @@ class SKUSerializer(serializers.ModelSerializer):
     class Meta:
         model = SKU
         exclude = ('default_image', 'create_time', 'update_time')
+
+
+class SKUCategorySerializer(serializers.ModelSerializer):
+    """分类序列化器类"""
+    class Meta:
+        model = GoodsCategory
+        fields = ('id', 'name')
+
