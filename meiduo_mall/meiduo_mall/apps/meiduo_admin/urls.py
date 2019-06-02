@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from meiduo_admin.views import users, statistical, channels, skus, spus, orders
+from meiduo_admin.views import users, statistical, channels, skus, spus, orders, permissions
 
 urlpatterns = [
     url(r'^authorizations/$', users.AdminAuthView.as_view()),
@@ -26,6 +26,11 @@ urlpatterns = [
     url(r'^goods/simple/$', spus.SPUSimpleView.as_view()),
     url(r'^skus/categories/$', skus.SKUCategoriesView.as_view()),
     url(r'^goods/(?P<pk>\d+)/specs/$', spus.SPUSpecView.as_view()),
+
+    # 权限管理
+    url(r'^permission/content_types/$', permissions.PermissionViewSet.as_view({
+        'get': 'content_types'
+    }))
 ]
 
 # 频道管理
@@ -50,4 +55,10 @@ urlpatterns += router.urls
 # 订单管理
 router = DefaultRouter()
 router.register('orders', orders.OrdersViewSet, base_name='orders')
+urlpatterns += router.urls
+
+
+# 权限管理
+router = DefaultRouter()
+router.register('permission/perms', permissions.PermissionViewSet, base_name='perms')
 urlpatterns += router.urls
