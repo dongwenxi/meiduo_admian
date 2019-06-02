@@ -36,6 +36,11 @@ urlpatterns = [
     url(r'^permission/simple/$', permissions.GroupViewSet.as_view({
         'get': 'simple'
     })),
+
+    # 管理员管理
+    url(r'^permission/groups/simple/$', permissions.AdminViewSet.as_view({
+        'get': 'simple'
+    }))
 ]
 
 # 频道管理

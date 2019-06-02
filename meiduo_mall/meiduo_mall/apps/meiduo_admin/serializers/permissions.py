@@ -40,6 +40,14 @@ class AdminSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'mobile', 'email', 'groups', 'user_permissions')
 
 
+class GroupSimpleSerializer(serializers.ModelSerializer):
+    """用户组序列化器类"""
+    class Meta:
+        model = Group
+        fields = ('id', 'name')
+
+
+
 
 
 
