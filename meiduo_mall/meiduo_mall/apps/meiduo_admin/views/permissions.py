@@ -73,11 +73,40 @@ class GroupViewSet(ModelViewSet):
     serializer_class = GroupSerializer
 
     # GET /meiduo_admin/permission/groups/ -> list
+    # POST /meiduo_admin/permission/groups/ -> create
+    # GET /meiduo_admin/permission/groups/(?P<pk>\d+)/ -> retrieve
+    # PUT /meiduo_admin/permission/groups/(?P<pk>\d+)/ -> update
+    # DELETE /meiduo_admin/permission/groups/(?P<pk>\d+)/ -> destroy
 
     # def list(self, request):
     #     qs = self.get_queryset()
     #     serializer = self.get_serializer(qs, many=True)
     #     return Response(serializer.data)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #
+    #     serializer.save() # -> create
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    # def retrieve(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance)
+    #     return Response(serializer.data)
+
+    # def update(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     serializer = self.get_serializer(instance, data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #     serializer.save() # update
+    #     return Response(serializer.data)
+
+    # def destroy(self, request, *args, **kwargs):
+    #     instance = self.get_object()
+    #     instance.delete()
+    #     return Response(status=status.HTTP_204_NO_CONTENT)
+
 
     # GET /meiduo_admin/permission/simple/ -> simple
     def simple(self, request):
