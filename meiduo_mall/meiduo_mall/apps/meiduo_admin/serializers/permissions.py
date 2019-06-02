@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Permission
+from django.contrib.auth.models import Permission, Group
 from django.contrib.contenttypes.models import ContentType
 from rest_framework import serializers
 
@@ -15,3 +15,10 @@ class ContentTypeSerializer(serializers.ModelSerializer):
     class Meta:
         model = ContentType
         fields = ('id', 'name')
+
+
+class GroupSerializer(serializers.ModelSerializer):
+    """用户组序列化器类"""
+    class Meta:
+        model = Group
+        fields = '__all__'
