@@ -30,7 +30,12 @@ urlpatterns = [
     # 权限管理
     url(r'^permission/content_types/$', permissions.PermissionViewSet.as_view({
         'get': 'content_types'
-    }))
+    })),
+
+    # 用户组管理
+    url(r'^permission/simple/$', permissions.GroupViewSet.as_view({
+        'get': 'simple'
+    })),
 ]
 
 # 频道管理
