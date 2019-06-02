@@ -131,12 +131,20 @@ class AdminViewSet(ModelViewSet):
     # 指定视图所使用的序列化器类
     serializer_class = AdminSerializer
 
-    #  GET /meiduo_admin/permission/admins/ -> list
+    # GET /meiduo_admin/permission/admins/ -> list
+    # POST /meiduo_admin/permission/admins/ -> create
 
     # def list(self, request):
     #     qs = self.get_queryset()
     #     serializer = self.get_serializer(qs, many=True)
     #     return Response(serializer.data)
+
+    # def create(self, request, *args, **kwargs):
+    #     serializer = self.get_serializer(data=request.data)
+    #     serializer.is_valid(raise_exception=True)
+    #
+    #     serializer.save() # -> create
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     # GET /meiduo_admin/permission/groups/simple/ -> simple
     def simple(self, request):
