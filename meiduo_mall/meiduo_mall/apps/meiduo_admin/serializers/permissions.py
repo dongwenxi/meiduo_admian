@@ -81,6 +81,22 @@ class AdminSerializer(serializers.ModelSerializer):
 
         return user
 
+    def update(self, instance, validated_data):
+        # 处理密码
+        password = validated_data.get('password')
+
+        # 更新管理员
+        user = super().update(instance, validated_data)
+
+        if password:
+            # 重新设置用户的密码
+            user.set_password(password)
+            user.save()
+
+        return user
+
+
+
 
 
 
