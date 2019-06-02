@@ -5,7 +5,9 @@ from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import IsAdminUser
 
 from meiduo_admin.serializers.permissions import PermissionSerializer, ContentTypeSerializer, GroupSerializer, \
-    PermissionSimpleSerializer
+    PermissionSimpleSerializer, AdminSerializer
+
+from users.models import User
 
 
 class PermissionViewSet(ModelViewSet):
@@ -107,7 +109,6 @@ class GroupViewSet(ModelViewSet):
     #     instance.delete()
     #     return Response(status=status.HTTP_204_NO_CONTENT)
 
-
     # GET /meiduo_admin/permission/simple/ -> simple
     def simple(self, request):
         """
@@ -123,3 +124,16 @@ class GroupViewSet(ModelViewSet):
         return Response(serializer.data)
 
 
+class AdminViewSet(ModelViewSet):
+    permission_classes = [IsAdminUser]
+    # 指定视图所使用的查询集
+    queryset = User.objects.filter(is_staff=True)
+    # 指定视图所使用的序列化器类
+    serializer_class = AdminSerializer
+
+    #  GET /meiduo_admin/permission/admins/ -> list
+
+    # def list(self, request):
+    #     qs = self.get_queryset()
+    #     serializer = self.get_serializer(qs, many=True)
+    #     return Response(serializer.data)

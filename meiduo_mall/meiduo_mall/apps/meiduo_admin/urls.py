@@ -73,3 +73,8 @@ urlpatterns += router.urls
 router = DefaultRouter()
 router.register('permission/groups', permissions.GroupViewSet, base_name='groups')
 urlpatterns += router.urls
+
+# 管理员管理
+router = DefaultRouter()
+router.register('permission/admins', permissions.AdminViewSet, base_name='admins')
+urlpatterns += router.urls
